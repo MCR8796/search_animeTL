@@ -90,4 +90,4 @@ search_end_str = search_end.strftime('%Y-%m-%d_%H:%M:%S') + "_JST"
 
 # プロンプトの生成
 prompt = f"list:1761552900252488071 since:{search_start_str} until:{search_end_str} include:nativeretweets"
-st.text(f"{prompt}")
+st.code(f"{prompt}")
