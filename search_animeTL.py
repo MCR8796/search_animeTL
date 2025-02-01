@@ -42,7 +42,13 @@ selected_day = st.selectbox('放送曜日を選択', days_of_week)
 
 # 選択した曜日のアニメタイトルをプルダウンで表示
 anime_titles_for_day = anime_by_day[selected_day]
-anime_title = st.selectbox(f'アニメタイトルを選択', anime_titles_for_day)
+
+if anime_titles_for_day:
+    # アニメタイトルを選択
+    anime_title = st.selectbox(f'アニメタイトルを選択', anime_titles_for_day)
+else:
+    st.warning(f"{selected_day}曜日に放送されているアニメはありません。")
+
 
 # 話数の選択
 anime = next(item for item in anime_schedule if item['title'] == anime_title)
