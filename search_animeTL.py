@@ -11,7 +11,7 @@ with open('anime_schedule.json', 'r', encoding='utf-8') as f:
 current_datetime = datetime.now()
 
 # UIの作成
-st.title("アニメTL検索")
+st.title("アニメ検索用プロンプト生成")
 
 # 曜日番号と曜日名のマッピング
 week_to_day = {
@@ -21,7 +21,8 @@ week_to_day = {
     4: "木",
     5: "金",
     6: "土",
-    7: "日"
+    7: "日",
+    8: "その他"
 }
 
 # 放送曜日ごとにアニメをグループ化
@@ -34,7 +35,7 @@ for anime in anime_schedule:
         anime_by_day[day_name].append(anime['title'])
 
 # 曜日のリスト
-days_of_week = ["月", "火", "水", "木", "金", "土", "日"]
+days_of_week = ["月", "火", "水", "木", "金", "土", "日", "その他"]
 
 # 曜日ごとにプルダウンメニューを表示
 selected_day = st.selectbox('放送曜日を選択', days_of_week)
