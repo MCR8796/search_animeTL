@@ -11,7 +11,7 @@ with open('anime_schedule.json', 'r', encoding='utf-8') as f:
 current_datetime = datetime.now()
 
 # UIの作成
-st.title("アニメ検索用プロンプト生成")
+st.title("アニメTL検索")
 
 # 曜日番号と曜日名のマッピング
 week_to_day = {
