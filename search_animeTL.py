@@ -1,6 +1,7 @@
 import streamlit as st
 import json
 from datetime import datetime, timedelta
+from collections import defaultdict
 
 # アニメの放送日時を格納したJSONファイルの読み込み
 with open('anime_schedule.json', 'r', encoding='utf-8') as f:
@@ -12,9 +13,35 @@ current_datetime = datetime.now()
 # UIの作成
 st.title("アニメ検索用プロンプト生成")
 
-# アニメタイトルの選択
-anime_titles = [anime['title'] for anime in anime_schedule]
-anime_title = st.selectbox('アニメタイトルを選択', anime_titles)
+# 曜日番号と曜日名のマッピング
+week_to_day = {
+    1: "月",
+    2: "火",
+    3: "水",
+    4: "木",
+    5: "金",
+    6: "土",
+    7: "日"
+}
+
+# 放送曜日ごとにアニメをグループ化
+anime_by_day = defaultdict(list)
+
+# 曜日情報を基にアニメをグループ化
+for anime in anime_schedule:
+    day_name = week_to_day.get(anime['week'])
+    if day_name:
+        anime_by_day[day_name].append(anime['title'])
+
+# 曜日のリスト
+days_of_week = ["月", "火", "水", "木", "金", "土", "日"]
+
+# 曜日ごとにプルダウンメニューを表示
+selected_day = st.selectbox('放送曜日を選択', days_of_week)
+
+# 選択した曜日のアニメタイトルをプルダウンで表示
+anime_titles_for_day = anime_by_day[selected_day]
+anime_title = st.selectbox(f'アニメタイトルを選択', anime_titles_for_day)
 
 # 話数の選択
 anime = next(item for item in anime_schedule if item['title'] == anime_title)
@@ -30,7 +57,7 @@ first_broadcast_start = datetime(broadcast_year, broadcast_month, broadcast_day,
 
 # 放送済みの話数（現在日時より前の話数を計算）
 broadcast = []
-for i, week in enumerate(anime['week']):
+for i, week in enumerate(anime['broadcast']):
     # 放送開始日時から週番号を基に放送日時を計算
     broadcast_start = first_broadcast_start + timedelta(weeks=i)
     
