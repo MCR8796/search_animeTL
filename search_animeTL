@@ -1,0 +1,66 @@
+import streamlit as st
+import json
+from datetime import datetime, timedelta
+
+# アニメの放送日時を格納したJSONファイルの読み込み
+with open('anime_schedule.json', 'r', encoding='utf-8') as f:
+    anime_schedule = json.load(f)
+
+# 現在の日時を取得
+current_datetime = datetime.now()
+
+# UIの作成
+st.title("アニメ検索用プロンプト生成")
+
+# アニメタイトルの選択
+anime_titles = [anime['title'] for anime in anime_schedule]
+anime_title = st.selectbox('アニメタイトルを選択', anime_titles)
+
+# 話数の選択
+anime = next(item for item in anime_schedule if item['title'] == anime_title)
+
+broadcast_year = anime['year']
+broadcast_month = anime['month']
+broadcast_day = anime['day']
+broadcast_hour = anime['hour']
+broadcast_minute = anime['minute']
+
+# 放送開始日時（1話目の放送開始日時）
+first_broadcast_start = datetime(broadcast_year, broadcast_month, broadcast_day, broadcast_hour, broadcast_minute)
+
+# 放送済みの話数（現在日時より前の話数を計算）
+broadcast = []
+for i, week in enumerate(anime['week']):
+    # 放送開始日時から週番号を基に放送日時を計算
+    broadcast_start = first_broadcast_start + timedelta(weeks=i)
+    
+    if week is not None:
+        # 現在日時より前の放送分を計算
+        if broadcast_start <= current_datetime:
+            broadcast.append(broadcast_start)
+
+episodes = [i+1 for i in range(len(broadcast))]
+episode = st.selectbox('話数を選択', episodes)
+
+# 放送時間の設定
+start_offset = st.number_input('検索範囲（デフォ：1分前）', min_value=0, value=1)
+end_offset = st.number_input('検索範囲（デフォ：3分後）', min_value=0, value=3)
+delay_time = st.number_input('放送遅延（分）', min_value=0, value=0)
+
+# 指定された週番号に基づいて放送日を計算
+episode_week = broadcast[episode-1]
+# 放送開始日時（例: 1話の放送開始）
+broadcast_start = episode_week
+broadcast_end = broadcast_start + timedelta(minutes=30)  # 仮の放送終了日時（30分後）
+
+# 検索時間の計算
+search_start = broadcast_start - timedelta(minutes=start_offset + delay_time)
+search_end = broadcast_end + timedelta(minutes=end_offset + delay_time)
+
+# JSTに変換（例として日本時間で表示）
+search_start_str = search_start.strftime('%Y-%m-%d_%H:%M:%S') + "_JST"
+search_end_str = search_end.strftime('%Y-%m-%d_%H:%M:%S') + "_JST"
+
+# プロンプトの生成
+prompt = f"list:1761552900252488071 since:{search_start_str} until:{search_end_str} include:nativeretweets"
+st.text(f"{prompt}")
