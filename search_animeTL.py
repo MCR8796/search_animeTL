@@ -78,6 +78,8 @@ for i, week in enumerate(anime['broadcast']):
             broadcast.append(broadcast_start)
 
 episode = st.selectbox('話数を選択', episodes)
+# 選択肢のインデックスを取得
+selected_index = episodes.index(episode)
 
 # 放送時間の設定
 start_offset = st.number_input('検索範囲（デフォ：1分前）', min_value=0, value=1)
@@ -85,7 +87,7 @@ end_offset = st.number_input('検索範囲（デフォ：3分後）', min_value=
 delay_time = st.number_input('放送遅延（分）', min_value=0, value=0)
 
 # 指定された週番号に基づいて放送日を計算
-episode_week = broadcast[episode-1]
+episode_week = broadcast[selected_index]
 # 放送開始日時（例: 1話の放送開始）
 broadcast_start = episode_week
 broadcast_end = broadcast_start + timedelta(minutes=30)  # 仮の放送終了日時（30分後）
