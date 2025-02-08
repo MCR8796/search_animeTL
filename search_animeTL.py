@@ -81,7 +81,7 @@ selected_index = episodes.index(episode)
 # 放送時間の設定
 start_offset = st.number_input('検索範囲（デフォ：1分前）', min_value=0, value=1)
 end_offset = st.number_input('検索範囲（デフォ：3分後）', min_value=0, value=3)
-delay_time = st.number_input('放送遅延（分）', min_value=0, value=0)
+delay_time = st.number_input('放送遅延（分）', value=0)
 
 # 指定された週番号に基づいて放送日を計算
 episode_week = broadcast[selected_index]
@@ -90,7 +90,7 @@ broadcast_start = episode_week
 broadcast_end = broadcast_start + timedelta(minutes=30)  # 仮の放送終了日時（30分後）
 
 # 検索時間の計算
-search_start = broadcast_start - timedelta(minutes=start_offset + delay_time)
+search_start = broadcast_start - timedelta(minutes=start_offset - delay_time)
 search_end = broadcast_end + timedelta(minutes=end_offset + delay_time)
 
 # JSTに変換（例として日本時間で表示）
