@@ -67,7 +67,7 @@ episodes = []
 broadcast = []
 for i, week in enumerate(anime['broadcast']):
     # 放送開始日時から週番号を基に放送日時を計算
-    broadcast_start = first_broadcast_start + timedelta(weeks=i + 1)
+    broadcast_start = first_broadcast_start + timedelta(weeks=i - 1)
     if week is not None:
         # 現在日時より前の放送分を計算
         if broadcast_start <= current_datetime:
