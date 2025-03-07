@@ -8,7 +8,7 @@ with open('anime_schedule.json', 'r', encoding='utf-8') as f:
     anime_schedule = json.load(f)
 
 # 現在の日時を取得
-current_datetime = datetime.now()
+current_datetime = datetime.now() + timedelta(weeks=1)
 
 # UIの作成
 st.title("アニメ検索用プロンプト生成")
@@ -70,7 +70,7 @@ for i, week in enumerate(anime['broadcast']):
     broadcast_start = first_broadcast_start + timedelta(weeks=i)
     if week is not None:
         # 現在日時より前の放送分を計算
-        if broadcast_start <= (current_datetime + timedelta(weeks=1)):
+        if broadcast_start <= current_datetime:
             episodes.append(week)
             broadcast.append(broadcast_start)
 
