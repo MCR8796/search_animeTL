@@ -8,7 +8,7 @@ with open('anime_schedule.json', 'r', encoding='utf-8') as f:
     anime_schedule = json.load(f)
 
 # 現在の日時を取得
-current_datetime = datetime.now() + timedelta(weeks=1)
+current_datetime = datetime.now() + timedelta(days=1)
 
 # UIの作成
 st.title("アニメ検索用プロンプト生成")
