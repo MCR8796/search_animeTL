@@ -98,5 +98,5 @@ search_start_str = search_start.strftime('%Y-%m-%d_%H:%M:%S') + "_JST"
 search_end_str = search_end.strftime('%Y-%m-%d_%H:%M:%S') + "_JST"
 
 # プロンプトの生成
-prompt = f"list:1761552900252488071 since:{search_start_str} until:{search_end_str} include:nativeretweets"
+prompt = f"list:1855767636933824621 since:{search_start_str} until:{search_end_str} include:nativeretweets"
 st.code(f"{prompt}")
