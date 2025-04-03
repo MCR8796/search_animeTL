@@ -74,9 +74,12 @@ for i, week in enumerate(anime['broadcast']):
             episodes.append(week)
             broadcast.append(broadcast_start)
 
-episode = st.selectbox('話数を選択', episodes)
-# 選択肢のインデックスを取得
-selected_index = episodes.index(episode)
+if episodes:
+    episode = st.selectbox('話数を選択', episodes)
+    # 選択肢のインデックスを取得
+    selected_index = episodes.index(episode)
+else:
+    st.warning("放送済みの話数がありません。")
 
 # 放送時間の設定
 start_offset = st.number_input('検索範囲（デフォ：1分前）', min_value=0, value=1)
