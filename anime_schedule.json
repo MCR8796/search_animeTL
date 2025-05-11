@@ -730,23 +730,13 @@
         "broadcast": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     },
     {
-        "title": "ビルディバイド -#000000-",
+        "title": "IDOLY PRIDE",
         "year": 2021,
-        "month": 10,
+        "month": 1,
         "day": 10,
-        "hour": 0,
+        "hour": 23,
         "minute": 30,
         "week": 8,
         "broadcast": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    },
-    {
-        "title": "ビルディバイド -#FFFFFF-",
-        "year": 2022,
-        "month": 4,
-        "day": 3,
-        "hour": 0,
-        "minute": 30,
-        "week": 8,
-        "broadcast": [13, 14, 15, 16, 17, null, 18, 19, 20, 21, 22, 23, 24]
     }
 ]
